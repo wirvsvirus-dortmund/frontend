@@ -1,4 +1,4 @@
-# supermarkt-frontend
+# supermarkt-frontend [![Build Status](https://travis-ci.com/wirvsvirus-dortmund/frontend.svg?branch=master)](https://travis-ci.com/wirvsvirus-dortmund/frontend)
 
 ## Project setup
 ```
