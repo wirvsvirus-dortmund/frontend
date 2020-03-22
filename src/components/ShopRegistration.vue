@@ -21,14 +21,14 @@
     <div class="form-row mb-3">
       <label class="col-sm-2 col-form-label" for="marketName">Name</label>
       <div class="col-sm-10">
-        <input id="marketName" class="form-control" v-model.trim="newShop.name" placeholder="Ihr Supermarkt" type="text">
+        <input required id="marketName" class="form-control" v-model.trim="newShop.name" placeholder="Ihr Supermarkt" type="text">
       </div>
     </div>
 
     <div class="form-row mb-3">
       <label class="col-sm-2 col-form-label" for="marketAddress">Adresse</label>
       <div class="col-sm-10">
-        <input type="text" id="marketAddress" class="form-control" v-model.trim="newShop.address" placeholder="Straße Nr., PLZ Ort">
+        <input required type="text" id="marketAddress" class="form-control" v-model.trim="newShop.address" placeholder="Straße Nr., PLZ Ort">
       </div>
     </div>
 
@@ -37,11 +37,11 @@
     <div class="form-row mb-3">
       <label class="col-sm-2 col-form-label" for="shopCapacity">Kunden-Kapazität</label>
       <div class="col-sm-2">
-        <input id="shopCapacity" class="form-control" v-model.trim="newShop.capacity" type="number">
+        <input required id="shopCapacity" class="form-control" v-model.trim="newShop.capacity" type="number">
       </div>
       <label class="col-sm-2 col-form-label" for="contactInfo">Kontaktinformation</label>
       <div class="col-sm-6">
-        <input id="contactInfo" class="form-control" v-model.trim="newShop.contact_info" type="text">
+        <input required id="contactInfo" class="form-control" v-model.trim="newShop.contact_info" type="text">
       </div>
     </div>
 
@@ -88,7 +88,9 @@ export default {
                     if (response.statusCode == 401) {
                       this.error = "Ihnen fehlt die notwendige Berechtigung"
                     } else if (response.statusCode == 400) {
-                      this.error = ""
+                      this.error = "Daten fehlerhaft"
+                    } else {
+                      this.error = "Unbekannter Fehler, versuchen Sie es später erneut."
                     }
                 },
             })
