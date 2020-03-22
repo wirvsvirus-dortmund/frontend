@@ -1,61 +1,52 @@
 <template>
 
 <div class="container">
-    <div v-if="loading" class="loading">
-      Loading...
+  <h2>Einen neuen Markt / ein neues Geschäft hinzufügen</h2>
+
+  <div v-if="loading" class="loading">
+    Loading...
+  </div>
+
+  <div v-if="success" class="alert alert-success">
+    Markt erfolgreich eingetragen
+  </div>
+
+  <div v-if="error" class="alert alert-danger">
+    {{ error }}
+  </div>
+
+  <form class="wb-3"  v-on:submit.prevent="addShop">
+    <h3>Anschrift</h3>
+
+    <div class="form-row mb-3">
+      <label class="col-sm-2 col-form-label" for="marketName">Name</label>
+      <div class="col-sm-10">
+        <input id="marketName" class="form-control" v-model.trim="newShop.name" placeholder="Ihr Supermarkt" type="text">
+      </div>
     </div>
 
-    <div v-if="error" class="error">
-      {{ error }}
+    <div class="form-row mb-3">
+      <label class="col-sm-2 col-form-label" for="marketAddress">Adresse</label>
+      <div class="col-sm-10">
+        <input type="text" id="marketAddress" class="form-control" v-model.trim="newShop.address" placeholder="Straße Nr., PLZ Ort">
+      </div>
     </div>
-    <form method="POST" action="/api/shops" class="wb-3">
-        <h3 style="text-align: left">Anschrift</h3>
-        <div class="form-row mb-3" style="text-align: left; margin: 0 auto;">
-            <div class="col">
-                <label for="marketName">Names des Supermarktes</label>
-                <input id="marketName" class="form-control" v-model.trim="newShop.name" type="text" placeholder="Name des Supermarkts">
-            </div>
-        </div>
 
-        <div class="form-row mb-3" style="text-align: left; margin: 0 auto;">
-            <div class="col">
-                <label for="marketAddress">Adresse des Supermarktes</label>
-                <textarea id="marketAddress" class="form-control" v-model.trim="newShop.address" type="text" placeholder="Adresse des Supermarkts">
-                </textarea>
-            </div>
-        </div>
+    <h3>Marktinfo</h3>
 
-        <h3 style="text-align: left">Marktinfo</h3>
+    <div class="form-row mb-3">
+      <label class="col-sm-2 col-form-label" for="shopCapacity">Kunden-Kapazität</label>
+      <div class="col-sm-2">
+        <input id="shopCapacity" class="form-control" v-model.trim="newShop.capacity" type="number">
+      </div>
+      <label class="col-sm-2 col-form-label" for="contactInfo">Kontaktinformation</label>
+      <div class="col-sm-6">
+        <input id="contactInfo" class="form-control" v-model.trim="newShop.contact_info" type="text">
+      </div>
+    </div>
 
-        <div class="form-row mb-3" style="text-align: left; margin: 0 auto;">
-            <div class="col-md-2">
-                <label for="shopCapacity">Kapazität</label>
-                <input id="shopCapacity" class="form-control" v-model.trim="newShop.capacity" type="number" placeholder="Kapazität">
-            </div>
-            <div class="col-md-10">
-                <label for="contactInfo">Kontaktinformation</label>
-                <input id="contactInfo" class="form-control" v-model.trim="newShop.contact_info" type="text" placeholder="Name">
-            </div>
-        </div>
-
-        <button method="POST" type="submit" class="btn btn-primary" v-on:submit="addShop">
-            Supermarkt hinzufügen
-        </button>
-
-    </form>
-
-    <h3 class="mt-5">Gewählter Markt</h3>
-    <ul class="list-group">
-        <li class="list-group-item">
-            {{newShop.name}} – {{newShop.address}}
-        </li>
-        <li class="list-group-item">
-            Kapazität: {{newShop.capacity}}
-        </li>
-        <li class="list-group-item">
-            Kontaktinfo: {{newShop.contact_info}}
-        </li>
-    </ul>
+    <input type="submit" class="btn btn-primary" value="Geschäft eintragen">
+  </form>
 </div>
 </template>
 
@@ -66,46 +57,50 @@ export default {
     name: 'ShopRegistration',
     data (){
         return {
-            newShop: {
-                name: null,
-                adress: null,
-                capacity: null,
-                contact_info: null,
-            },
-            loading: false,
+            newShop: {},
+            sending: false,
             error: null,
+            success: false,
         }
     },
     watch: {
     '$route': 'addShop'
     },
     methods: {
-        addShop(data) {
+        addShop() {
             this.error = null
             this.loading = true
 
             JQuery.ajax("/api/shops", {
                 method: "POST",
                 dataType: "json",
-                data: data.newShop,
-                success: (data) => {
-                    data.address = data.address.replace("\n", "<br>")
-                    this.newShop = data
+                data: this.newShop,
+                success: (response) => {
+                    console.log(response)
+                    this.newShop = {}
                     this.loading = false
+                    this.success = "Markt erfolgreich eingetragen"
                 },
-                error: (error) => {
-                    console.log(error)
-                    this.newShop = null
+                error: (response) => {
+                    console.log(response)
                     this.loading = false
-                    this.error = "Failed to create shop. Fields require different input."
+                    this.success = true
+                    if (response.statusCode == 401) {
+                      this.error = "Ihnen fehlt die notwendige Berechtigung"
+                    } else if (response.statusCode == 400) {
+                      this.error = ""
+                    }
                 },
-
             })
+            return false; // prevent browser from reloading page
         }
     }
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<!-- <style scoped>
-</style> -->
+<style scoped>
+label {
+  text-align: left;
+}
+</style>
