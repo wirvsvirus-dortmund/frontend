@@ -7,7 +7,7 @@
         <div class="form-row mb-3" style="text-align: left; margin: 0 auto;">
             <div class="col">
                 <label for="marketName">Names des Supermarktes</label>
-                <input id="marketName" class="form-control" v-model.trim="name" type="text" placeholder="Name des Supermarkts">
+                <input id="marketName" class="form-control" v-model.trim="newShop.name" type="text" placeholder="Name des Supermarkts">
             </div>
         </div>
 
