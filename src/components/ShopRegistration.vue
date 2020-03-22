@@ -1,7 +1,13 @@
 <template>
 
 <div class="container">
+    <div v-if="loading" class="loading">
+      Loading...
+    </div>
 
+    <div v-if="error" class="error">
+      {{ error }}
+    </div>
     <form method="POST" action="/api/shops" class="wb-3">
         <h3 style="text-align: left">Anschrift</h3>
         <div class="form-row mb-3" style="text-align: left; margin: 0 auto;">
@@ -24,7 +30,7 @@
         <div class="form-row mb-3" style="text-align: left; margin: 0 auto;">
             <div class="col-md-2">
                 <label for="shopCapacity">Kapazität</label>
-                <input id="shopCapacity" class="form-control" v-model.trim="newShop.capacity" type="text" placeholder="Kapazität">
+                <input id="shopCapacity" class="form-control" v-model.trim="newShop.capacity" type="number" placeholder="Kapazität">
             </div>
             <div class="col-md-10">
                 <label for="contactInfo">Kontaktinformation</label>
@@ -32,7 +38,7 @@
             </div>
         </div>
 
-        <button method="POST" type="submit" class="btn btn-primary" v-on:click="api/shops">
+        <button method="POST" type="submit" class="btn btn-primary" v-on:submit="addShop">
             Supermarkt hinzufügen
         </button>
 
@@ -54,13 +60,49 @@
 </template>
 
 <script>
+import JQuery from 'jquery'
+
 export default {
     name: 'ShopRegistration',
     data (){
         return {
-            newShop: {},
+            newShop: {
+                name: null,
+                adress: null,
+                capacity: null,
+                contact_info: null,
+            },
+            loading: false,
+            error: null,
         }
     },
+    watch: {
+    '$route': 'addShop'
+    },
+    methods: {
+        addShop(data) {
+            this.error = null
+            this.loading = true
+
+            JQuery.ajax("/api/shops", {
+                method: "POST",
+                dataType: "json",
+                data: data.newShop,
+                success: (data) => {
+                    data.address = data.address.replace("\n", "<br>")
+                    this.newShop = data
+                    this.loading = false
+                },
+                error: (error) => {
+                    console.log(error)
+                    this.newShop = null
+                    this.loading = false
+                    this.error = "Failed to create shop. Fields require different input."
+                },
+
+            })
+        }
+    }
 }
 </script>
 
