@@ -5,7 +5,7 @@
       Loading...
     </div>
 
-    <div v-if="error" class="error">
+    <div v-if="error" class="alert alert-danger">
       {{ error }}
     </div>
 
