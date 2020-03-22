@@ -3,8 +3,8 @@
 <div class="container">
   <h2>Einen neuen Markt / ein neues Geschäft hinzufügen</h2>
 
-  <div v-if="loading" class="loading">
-    Loading...
+  <div v-if="sending" class="alert alert-warning">
+    Daten werden übertragen 
   </div>
 
   <div v-if="success" class="alert alert-success">
@@ -69,7 +69,7 @@ export default {
     methods: {
         addShop() {
             this.error = null
-            this.loading = true
+            this.sending = true
 
             JQuery.ajax("/api/shops", {
                 method: "POST",
@@ -78,12 +78,12 @@ export default {
                 success: (response) => {
                     console.log(response)
                     this.newShop = {}
-                    this.loading = false
+                    this.sending = false
                     this.success = "Markt erfolgreich eingetragen"
                 },
                 error: (response) => {
                     console.log(response)
-                    this.loading = false
+                    this.sending = false
                     this.success = true
                     if (response.statusCode == 401) {
                       this.error = "Ihnen fehlt die notwendige Berechtigung"
@@ -92,7 +92,6 @@ export default {
                     }
                 },
             })
-            return false; // prevent browser from reloading page
         }
     }
 }
