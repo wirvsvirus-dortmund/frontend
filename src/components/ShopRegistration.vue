@@ -84,7 +84,7 @@ export default {
                 error: (response) => {
                     console.log(response)
                     this.sending = false
-                    this.success = true
+                    this.success = false
                     if (response.statusCode == 401) {
                       this.error = "Ihnen fehlt die notwendige Berechtigung"
                     } else if (response.statusCode == 400) {
