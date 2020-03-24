@@ -37,13 +37,4 @@ export default {
 
 
 <style scoped>
-    ul {
-      list-style-type: none;
-      padding: 0;
-    }
-
-    li {
-      display: inline-block;
-      margin: 10px 10px;
-    }
 </style>
