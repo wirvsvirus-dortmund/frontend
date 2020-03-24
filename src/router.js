@@ -12,7 +12,7 @@ const routes = [
     component: Landing,
     name: 'Landing',
     props: {
-      msg: 'Wahts happeing yo?!'
+      msg: 'What\'s happenin\' y\'all?!'
     }
    },
   {

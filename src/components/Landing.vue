@@ -3,14 +3,24 @@
   <div class="main mx-auto">
     <h1>{{ msg }}</h1>
     <p>
-      Wartezeiten und Auslastung von Supermärkten in der Nachbarschaft. 
+      Wartezeiten und Auslastung von Supermärkten in der Nachbarschaft.
     </p>
     <h3>Supermäkte im Umkreis</h3>
     Supermäkte in der Nähe finden oder neue registrieren.
     <p></p>
     <ul>
-      <li><button type="button" class="btn btn-primary" href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">Finden</button></li>
-      <li><button type="button" class="btn btn-light">Registrieren</button></li>
+      <li>
+          <button type="button" class="btn btn-primary" href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">
+            Finden
+          </button>
+      </li>
+      <li>
+        <router-link :to="{name: 'ShopRegistration'}">
+          <button type="button" class="btn btn-light">
+            Registrieren
+          </button>
+        </router-link>
+      </li>
     </ul>
     <h3>Motivation</h3>
     Um langes Schlangestehen und große Menschenansammlungen zu vermeiden trackt diese App die Auslastung von Supermärkten.
@@ -35,13 +45,10 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-/* div.hello{
-  width:50%
-} */
 div.wrapper {
-  background-image: url(/bg.jpg); 
+  background-image: url(/bg.jpg);
   height: 100%;
-} 
+}
 
 div.main {
   position: relative;
