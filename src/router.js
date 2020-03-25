@@ -1,17 +1,29 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import ShopRegistration from './components/ShopRegistration.vue';
+import Landing from './components/Landing.vue';
 
 Vue.use(Router);
+
+
+const routes = [
+  {
+    path: '/',
+    component: Landing,
+    name: 'Landing',
+    props: {
+      msg: 'What\'s happenin\' y\'all?!'
+    }
+   },
+  {
+    path: '/register/shop',
+    name: 'ShopRegistration',
+    component: ShopRegistration,
+  }
+]
 
 export default new Router({
   mode: 'history',
   base: process.env.BASE_URL,
-  routes: [
-    {
-      path: '/register/shop',
-      name: 'ShopRegistration',
-      component: ShopRegistration,
-    }
-  ],
+  routes: routes
 });
