@@ -1,14 +1,12 @@
 FROM node:13.10-stretch AS BUILDER
 
 
+WORKDIR /opt/frontend
 COPY package.json package-lock.json babel.config.js /opt/frontend/
+RUN npm install
 COPY public /opt/frontend/public
 COPY src /opt/frontend/src
-
-
-WORKDIR /opt/frontend
-RUN npm install \
-	&& npm run build
+RUN npm run build
 
 
 FROM nginx:1.17
