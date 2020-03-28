@@ -10,9 +10,9 @@
     <p></p>
     <ul>
       <li>
-          <button type="button" class="btn btn-primary" href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">
+          <router-link type="button" class="btn btn-primary" :to="{name: 'Shops'}">
             Finden
-          </button>
+          </router-link>
       </li>
       <li>
         <router-link :to="{name: 'ShopRegistration'}">
