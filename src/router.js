@@ -11,17 +11,16 @@ Vue.use(Router);
 
 
 const routes = [
-  {
-    path: '/',
+  { path: '/',
     component: Landing,
     name: 'Landing',
     props: {
       msg: 'What\'s happenin\' y\'all?!'
     }
    },
-  { path: '/register/shop', component: ShopRegistration },
-  { path: '/shops/:id', component: Shop },
-  { path: '/shops', component: ShopList },
+  { name: 'ShopRegistration', path: '/register/shop', component: ShopRegistration },
+  { name: 'Shop', path: '/shops/:id', component: Shop },
+  { name: 'Shops', path: '/shops', component: ShopList },
 ]
 
 export default new Router({
