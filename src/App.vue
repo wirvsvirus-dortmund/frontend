@@ -18,9 +18,9 @@
     <div class="container">
       <div v-for="(alert, index) in alerts"  class="alert alert-danger" :key="alert.timestamp">
         {{ alert.message }}
-          <button v-on:click="alerts.splice(index, 1)" type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
+        <button v-on:click="alerts.splice(index, 1)" type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
       </div>
     </div>
 
