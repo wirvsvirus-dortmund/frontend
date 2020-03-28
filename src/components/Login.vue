@@ -1,19 +1,24 @@
 <template>
 
-<form class="form form-inline" v-if="currentUser === null">
-  <form class="form-inline my-2 my-lg-0" v-on:submit.prevent="login">
-    <input v-model="username" type="text" required class="form-control mr-sm-2"
-      placeholder="Nutzername/Email" aria-label="Nutzername/Email"
+<form class='form form-inline' v-if='currentUser === null'>
+  <form class='form-inline my-2 my-lg-0' v-on:submit.prevent='login'>
+    <input v-model='username' type='text' required class='form-control mr-sm-2'
+      placeholder='Nutzername/Email' aria-label='Nutzername/Email'
       >
-    <input v-model="password" type="password" required class="form-control mr-sm-2"
-      placeholder="Passwort" aria-label="Passwort"
+    <input v-model='password' type='password' required class='form-control mr-sm-2'
+      placeholder='Passwort' aria-label='Passwort'
       >
-    <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Login</button>
+
+    <div class="form-check mr-2">
+      <input type="checkbox" class="form-check-input" v-model="rememberMe" id="rememberMe">
+      <label class="form-check-label" for="rememberMe">Eingeloggt bleiben</label>
+    </div>
+    <button class='btn btn-outline-primary my-2 my-sm-0' type='submit'>Login</button>
   </form>
 </form>
 <div v-else>
 Logged in as {{ currentUser.username }}
-  <button class="btn btn-outline-primary my-2 my-sm-0" @click="logout">Logout</button>
+  <button class='btn btn-outline-primary my-2 my-sm-0' @click='logout'>Logout</button>
 </div>
 
 </template>
@@ -28,7 +33,8 @@ export default {
     return {
       currentUser: null,
       username: null,
-      password: null
+      password: null,
+      rememberMe: false
     }
   },
   created () {
@@ -36,8 +42,8 @@ export default {
   },
   methods: {
     fetchCurrentUser () {
-      JQuery.ajax("/api/current_user/", {
-        dataType: "json",
+      JQuery.ajax('/api/current_user/', {
+        dataType: 'json',
         success: (data) => {
           this.currentUser = data
         },
@@ -48,40 +54,53 @@ export default {
     },
     login () {
       // first we need to get an csrf token
-      JQuery.ajax("/api/csrf_token/", {
-        error: (error) => {console.log(error)},
+      JQuery.ajax('/api/csrf_token/', {
+        error: (error) => {
+          console.log('Error getting CSRF token')
+          console.log(error)
+        },
         success: (data) => {
-          console.log('CSRF TOKEN RECEIVED')
+          console.log('CSRF token received')
           this.loginRequest(data.token)
         }
       })
     },
     loginRequest (token) {
-      JQuery.ajax("/api/login/", {
-        method: "POST",
-        data: {password: this.password, username: this.username, csrf_token: token},
+      JQuery.ajax('/api/login/', {
+        method: 'POST',
+        data: {
+          password: this.password,
+          username: this.username,
+          csrf_token: token,
+          remember_me: this.rememberMe
+        },
         error: (error) => {
-          console.log(error)
           let data = error.responseJSON
-          if (data.message == "invalid_credentials") {
-            this.$emit('error', {'message': "Falscher Nutzername / Passwort"})
-          } else if (data.message == "unconfirmed_email") {
-            this.$emit('error', {'message': "Unbestägtige Email-Adresse"})
+          if (data.message == 'invalid_credentials') {
+            this.$emit('error', {'message': 'Falscher Nutzername / Passwort'})
+          } else if (data.message == 'unconfirmed_email') {
+            this.$emit('error', {'message': 'Unbestägtige Email-Adresse'})
           } else {
-            this.$emit('error', {'message': "Unbekannter Fehler"})
+            this.$emit('error', {'message': 'Unbekannter Fehler'})
+            console.log('Unknown error when trying to login')
+            console.log(error)
           }
         },
         success: () => {
-          console.log('SUCCESSFULLY LOGGED IN')
+          console.log('Successfully logged in')
           this.fetchCurrentUser()
         }
       })
-      this.password = null;
+      this.password = null
+      this.rememberMe = false
     },
     logout () {
-      JQuery.ajax("/api/logout/", {
-        method: "POST",
-        success: this.fetchCurrentUser,
+      JQuery.ajax('/api/logout/', {
+        method: 'POST',
+        success: () => {
+          console.log('User logged out')
+          this.currentUser = null
+        }
       })
     }
   }
