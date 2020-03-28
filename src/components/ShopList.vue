@@ -26,7 +26,7 @@ import ShopPreview from './ShopPreview'
 export default {
   name: 'Shop',
   components: {
-    ShopPreview,
+    'shop-preview': ShopPreview,
   },
   data () {
     return {

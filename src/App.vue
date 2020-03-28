@@ -11,7 +11,18 @@
           <router-link class="nav-link" to="/shops">Märkte</router-link>
         </div>
       </div>
+
+      <login v-on:error="onError" />
     </nav>
+
+    <div class="container">
+      <div v-for="(alert, index) in alerts"  class="alert alert-danger" :key="alert.timestamp">
+        {{ alert.message }}
+          <button v-on:click="alerts.splice(index, 1)" type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+      </div>
+    </div>
 
     <main class="container">
       <router-view />
@@ -30,3 +41,24 @@
   margin-top: 60px;
 }
 </style>
+
+<script>
+import Login from './components/Login.vue'
+
+export default {
+  name: 'App',
+  data: () => { return {
+    alerts: [],
+  }},
+  components: {
+    'login': Login,
+  },
+  methods: {
+    onError (error) {
+      error['timestamp'] = Date.now()
+      this.alerts.push(error);
+    } 
+  }
+}
+
+</script>
