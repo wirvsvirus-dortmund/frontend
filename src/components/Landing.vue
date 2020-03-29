@@ -15,7 +15,7 @@
           </router-link>
       </li>
       <li>
-        <router-link :to="{name: 'ShopRegistration'}">
+        <router-link :to="{name: 'UserRegistration'}">
           <button type="button" class="btn btn-light">
             Registrieren
           </button>
