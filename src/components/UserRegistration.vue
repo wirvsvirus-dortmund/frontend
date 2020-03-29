@@ -1,31 +1,31 @@
 <template>
 
-<div class='container'>
+<div class="container">
   <h2>Nutzer-Registrierung</h2>
 
-  <form class='wb-3'  v-on:submit.prevent='addUser'>
-    <div class='form-row mb-3'>
-      <label class='col-sm-2 col-form-label' for='name'>Name</label>
-      <div class='col-sm-10'>
-        <input required id='name' class='form-control' v-model.trim='newUser.name' placeholder='Name' type='text'>
+  <form class="wb-3"  v-on:submit.prevent="addUser">
+    <div class="form-row mb-3">
+      <label class="col-sm-2 col-form-label" for="name">Name</label>
+      <div class="col-sm-10">
+        <input required id="name" class="form-control" v-model.trim="newUser.name" placeholder="Name" type="text">
       </div>
     </div>
 
-    <div class='form-row mb-3'>
-      <label class='col-sm-2 col-form-label' for='email'>Email</label>
-      <div class='col-sm-10'>
-        <input required type='text' id='email' class='form-control' v-model.trim='newUser.email' placeholder='email'>
+    <div class="form-row mb-3">
+      <label class="col-sm-2 col-form-label" for="email">Email</label>
+      <div class="col-sm-10">
+        <input required type="text" id="email" class="form-control" v-model.trim="newUser.email" placeholder="email">
       </div>
     </div>
 
-    <div class='form-row mb-3'>
-      <label class='col-sm-2 col-form-label' for='password'>Passwort</label>
-      <div class='col-sm-10'>
-        <input required type='password' id='password' class='form-control' v-model='newUser.password'>
+    <div class="form-row mb-3">
+      <label class="col-sm-2 col-form-label" for="password">Passwort</label>
+      <div class="col-sm-10">
+        <input required type="password" id="password" class="form-control" v-model="newUser.password">
       </div>
     </div>
 
-    <input type='submit' class='btn btn-primary' value='Registrieren'>
+    <input type="submit" class="btn btn-primary" value="Registrieren">
   </form>
 </div>
 </template>

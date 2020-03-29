@@ -1,24 +1,24 @@
 <template>
 
-<form class='form form-inline' v-if='currentUser === null'>
-  <form class='form-inline my-2 my-lg-0' v-on:submit.prevent='login'>
-    <input v-model='email' type='email' required class='form-control mr-sm-2'
-      placeholder='Email' aria-label='Email'
+<form class="form form-inline" v-if="currentUser === null">
+  <form class="form-inline my-2 my-lg-0" v-on:submit.prevent="login">
+    <input v-model="email" id="email" type="email" required class="form-control mr-sm-2"
+      placeholder="Email" aria-label="Email"
       >
-    <input v-model='password' type='password' required class='form-control mr-sm-2'
-      placeholder='Passwort' aria-label='Passwort'
+    <input v-model="password" type="password" required class="form-control mr-sm-2"
+      placeholder="Passwort" aria-label="Passwort"
       >
 
-    <div class='form-check mr-2'>
-      <input type='checkbox' class='form-check-input' v-model='rememberMe' id='rememberMe'>
-      <label class='form-check-label' for='rememberMe'>Eingeloggt bleiben</label>
+    <div class="form-check mr-2">
+      <input type="checkbox" class="form-check-input" v-model="rememberMe" id="rememberMe">
+      <label class="form-check-label" for="rememberMe">Eingeloggt bleiben</label>
     </div>
-    <button class='btn btn-outline-primary my-2 my-sm-0' type='submit'>Login</button>
+    <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Login</button>
   </form>
 </form>
 <div v-else>
 Logged in as {{ currentUser.name }}
-  <button class='btn btn-outline-primary my-2 my-sm-0' @click='logout'>Logout</button>
+  <button class="btn btn-outline-primary my-2 my-sm-0" @click="logout">Logout</button>
 </div>
 
 </template>
