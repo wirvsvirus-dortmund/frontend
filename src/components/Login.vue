@@ -2,8 +2,8 @@
 
 <form class='form form-inline' v-if='currentUser === null'>
   <form class='form-inline my-2 my-lg-0' v-on:submit.prevent='login'>
-    <input v-model='username' type='text' required class='form-control mr-sm-2'
-      placeholder='Nutzername/Email' aria-label='Nutzername/Email'
+    <input v-model='email' type='email' required class='form-control mr-sm-2'
+      placeholder='Email' aria-label='Email'
       >
     <input v-model='password' type='password' required class='form-control mr-sm-2'
       placeholder='Passwort' aria-label='Passwort'
@@ -17,7 +17,7 @@
   </form>
 </form>
 <div v-else>
-Logged in as {{ currentUser.username }}
+Logged in as {{ currentUser.name }}
   <button class='btn btn-outline-primary my-2 my-sm-0' @click='logout'>Logout</button>
 </div>
 
@@ -32,7 +32,7 @@ export default {
   data () {
     return {
       currentUser: null,
-      username: null,
+      email: null,
       password: null,
       rememberMe: false
     }
@@ -70,7 +70,7 @@ export default {
         method: 'POST',
         data: {
           password: this.password,
-          username: this.username,
+          email: this.email,
           csrf_token: token,
           remember_me: this.rememberMe
         },
