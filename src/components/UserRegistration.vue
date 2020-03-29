@@ -7,21 +7,35 @@
     <div class="form-row mb-3">
       <label class="col-sm-2 col-form-label" for="name">Name</label>
       <div class="col-sm-10">
-        <input required id="name" class="form-control" v-model.trim="newUser.name" placeholder="Name" type="text">
+        <input v-model.trim="newUser.name" placeholder="Name" id="name"
+          type="text" required autofocus autocomplete="name"
+          class="form-control"
+        >
       </div>
     </div>
 
     <div class="form-row mb-3">
       <label class="col-sm-2 col-form-label" for="email">Email</label>
       <div class="col-sm-10">
-        <input required type="text" id="email" class="form-control" v-model.trim="newUser.email" placeholder="email">
+        <input  v-model.trim="newUser.email" placeholder="email" id="email"
+          type="email" required autocomplete="email"
+          class="form-control"
+          title="foo"
+          >
       </div>
     </div>
 
     <div class="form-row mb-3">
       <label class="col-sm-2 col-form-label" for="password">Passwort</label>
       <div class="col-sm-10">
-        <input required type="password" id="password" class="form-control" v-model="newUser.password">
+        <input v-model="newUser.password" required type="password" id="password" class="form-control">
+      </div>
+    </div>
+
+    <div class="form-row mb-3">
+      <label class="col-sm-2 col-form-label" for="confirm">Passwort bestätigen</label>
+      <div class="col-sm-10">
+        <input @input="verifyPassword" required type="password" id="confirm" class="form-control" v-model="confirmation">
       </div>
     </div>
 
@@ -37,11 +51,20 @@ import eventBus from '@/eventBus'
 export default {
   name: 'UserRegistration',
   data (){
-      return {
-          newUser: {},
-      }
+    return {
+      newUser: {},
+      confirmation: undefined
+    }
   },
   methods: {
+    verifyPassword () {
+      let elem = document.getElementById('confirm')
+      if (this.newUser.password === this.confirmation) {
+        elem.setCustomValidity('')
+      } else {
+        elem.setCustomValidity('Passwords do not match')
+      }
+    },
     addUser() {
       JQuery.ajax('/api/users', {
         method: 'POST',

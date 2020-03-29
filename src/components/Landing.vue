@@ -10,13 +10,13 @@
     <p></p>
     <ul>
       <li>
-          <router-link type="button" class="btn btn-primary" :to="{name: 'Shops'}">
+          <router-link type="button" class="btn btn-primary bg-primary" :to="{name: 'Shops'}">
             Finden
           </router-link>
       </li>
       <li>
         <router-link :to="{name: 'UserRegistration'}">
-          <button type="button" class="btn btn-light">
+          <button type="button" class="btn btn-outline-primary">
             Registrieren
           </button>
         </router-link>
@@ -71,8 +71,5 @@ ul {
 li {
   display: inline-block;
   margin: 10px 10px;
-}
-a {
-  color: #12529c;
 }
 </style>
