@@ -79,7 +79,6 @@ export default {
           })
         },
         error: (response) => {
-          console.log(response)
           let message
           if (response.status == 401) {
             message = 'Ihnen fehlt die notwendige Berechtigung'
@@ -88,6 +87,7 @@ export default {
           } else if (response.status == 422) {
             message = 'Ein Nutzer mit dieser Email Adresse ist bereits registriert. Passwort vergessen?'
           } else {
+            console.log(response)
             message = 'Unbekannter Fehler, versuchen Sie es später erneut.'
           }
           eventBus.$emit('flash', { message: message, category: 'danger'})
