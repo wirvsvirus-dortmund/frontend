@@ -12,11 +12,11 @@
         </div>
       </div>
 
-      <login v-on:error="onError" />
+      <login />
     </nav>
 
     <div class="container">
-      <div v-for="(alert, index) in alerts"  class="alert alert-danger" :key="alert.timestamp">
+      <div v-for="(alert, index) in alerts"  class="alert" :class="'alert-' + alert.category" :key="alert.timestamp">
         {{ alert.message }}
         <button v-on:click="alerts.splice(index, 1)" type="button" class="close" data-dismiss="alert" aria-label="Close">
           <span aria-hidden="true">&times;</span>
@@ -44,6 +44,7 @@
 
 <script>
 import Login from './components/Login.vue'
+import eventBus from './eventBus'
 
 export default {
   name: 'App',
@@ -53,10 +54,13 @@ export default {
   components: {
     'login': Login,
   },
+  created () {
+    eventBus.$on('flash', this.onFlash)
+  },
   methods: {
-    onError (error) {
-      error['timestamp'] = Date.now()
-      this.alerts.push(error);
+    onFlash (flash) {
+      flash['timestamp'] = Date.now()
+      this.alerts.push(flash);
     } 
   }
 }

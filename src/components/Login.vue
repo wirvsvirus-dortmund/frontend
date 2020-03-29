@@ -9,9 +9,9 @@
       placeholder='Passwort' aria-label='Passwort'
       >
 
-    <div class="form-check mr-2">
-      <input type="checkbox" class="form-check-input" v-model="rememberMe" id="rememberMe">
-      <label class="form-check-label" for="rememberMe">Eingeloggt bleiben</label>
+    <div class='form-check mr-2'>
+      <input type='checkbox' class='form-check-input' v-model='rememberMe' id='rememberMe'>
+      <label class='form-check-label' for='rememberMe'>Eingeloggt bleiben</label>
     </div>
     <button class='btn btn-outline-primary my-2 my-sm-0' type='submit'>Login</button>
   </form>
@@ -26,6 +26,7 @@ Logged in as {{ currentUser.name }}
 
 <script>
 import JQuery from 'jquery'
+import eventBus from '@/eventBus'
 
 export default {
   name: 'Login',
@@ -76,18 +77,21 @@ export default {
         },
         error: (error) => {
           let data = error.responseJSON
+          let message
           if (data.message == 'invalid_credentials') {
-            this.$emit('error', {'message': 'Falscher Nutzername / Passwort'})
+            console.log('invalid creds')
+            message = 'Falscher Nutzername / Passwort'
           } else if (data.message == 'unconfirmed_email') {
-            this.$emit('error', {'message': 'Unbestägtige Email-Adresse'})
+            message = 'Unbestägtige Email-Adresse'
           } else {
-            this.$emit('error', {'message': 'Unbekannter Fehler'})
+            message = 'Unbekannter Fehler'
             console.log('Unknown error when trying to login')
             console.log(error)
           }
+          eventBus.$emit('flash', {category: 'danger', message: message})
         },
         success: () => {
-          console.log('Successfully logged in')
+          eventBus.$emit('flash', {category: 'success', message: 'Erfolgreich eingeloggt'})
           this.fetchCurrentUser()
         }
       })
