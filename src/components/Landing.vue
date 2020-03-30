@@ -57,13 +57,13 @@ div.wrapper {
 
 div.main {
   position: relative;
-  max-width: 50%;
-  min-width: 27em;
+  max-width: 90%;
+  width: 50rem;
   padding: 4.5em 3em 3em 3em ;
   background: #ffffff;
   border-radius: 4px;
   text-align: center;
-  opacity: 0.9;
+  opacity: 0.85;
 }
 
 h3 {
