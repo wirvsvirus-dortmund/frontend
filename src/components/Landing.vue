@@ -5,14 +5,17 @@
     <p>
       Wartezeiten und Auslastung von Supermärkten in der Nachbarschaft.
     </p>
+
     <h3>Supermäkte im Umkreis</h3>
     Supermäkte in der Nähe finden oder neue registrieren.
-    <p></p>
+
     <ul>
       <li>
-          <router-link type="button" class="btn btn-primary bg-primary" :to="{name: 'Shops'}">
+        <router-link :to="{name: 'Shops'}">
+          <button type="button" class="btn btn-primary">
             Finden
-          </router-link>
+          </button>
+        </router-link>
       </li>
       <li>
         <router-link :to="{name: 'UserRegistration'}">
@@ -22,9 +25,11 @@
         </router-link>
       </li>
     </ul>
+
     <h3>Motivation</h3>
     Um langes Schlangestehen und große Menschenansammlungen zu vermeiden trackt diese App die Auslastung von Supermärkten.
-    Mehr Lorem Ipsum
+
+    <h3>Alles Open-Source:</h3>
     <ul>
       <li><a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank" rel="noopener">API Docs</a></li>
       <li><a href="https://github.com/wirvsvirus-dortmund" target="_blank" rel="noopener">Quellcode auf GitHub</a></li>
@@ -39,7 +44,7 @@ export default {
   name: 'Landing',
   props: {
     msg: String
-  }
+  },
 }
 </script>
 
@@ -58,7 +63,7 @@ div.main {
   background: #ffffff;
   border-radius: 4px;
   text-align: center;
-  opacity: 95%;
+  opacity: 0.9;
 }
 
 h3 {
