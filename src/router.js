@@ -12,13 +12,14 @@ Vue.use(Router);
 
 
 const routes = [
-  { path: '/',
+  {
+    path: '/',
     component: Landing,
     name: 'Landing',
     props: {
       msg: 'What\'s happenin\' y\'all?!'
     }
-   },
+  },
   { name: 'ShopRegistration', path: '/register/shop', component: ShopRegistration },
   { name: 'Shop', path: '/shops/:id', component: Shop },
   { name: 'Shops', path: '/shops', component: ShopList },

@@ -10,9 +10,8 @@
         <div class="navbar-nav mr-auto">
           <router-link class="nav-link" to="/shops">Märkte</router-link>
         </div>
+        <login />
       </div>
-
-      <login />
     </nav>
 
     <div class="container">
